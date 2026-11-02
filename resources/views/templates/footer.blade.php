@@ -71,6 +71,7 @@
     <!--end::Color Mode Toggle-->
 
     <!--end::Script-->
+    @stack('script')
   </body>
   <!--end::Body-->
 </html>

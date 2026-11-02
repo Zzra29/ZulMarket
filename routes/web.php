@@ -1,10 +1,9 @@
 <?php
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\productController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->group(function () {
-    Route::resource('members', MemberController::class);
-});
+
+    Route::resource('products', ProductController::class);
 
 Route::get('/', function () {
     return view('products.index');

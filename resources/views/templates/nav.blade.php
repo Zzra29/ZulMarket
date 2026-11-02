@@ -120,7 +120,7 @@
                   </button>
                 </li>
               </ul>
-            </li>
+            </li>           
             <!--end::Color Mode Toggle-->
 
             <!--begin::User Menu Dropdown-->
@@ -256,10 +256,10 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="./widgets/cards.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Products</p>
-                    </a>
+                  <a href="{{ url('products') }}" class="nav-link">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Products</p>
+                  </a>
                   </li>
                   <li class="nav-item">
                     <a href="./widgets/social.html" class="nav-link">
