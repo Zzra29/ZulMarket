@@ -1,325 +1,346 @@
 @extends('templates.layoutApp')
 
 @push('style')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.6.1/dist/css/
-tabulator_bootstrap5.min.css"
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.6.1/dist/css/tabulator_bootstrap5.min.css"
 crossorigin="anonymous" />
 @endpush
 
 @section('content')
- <!--begin::App Content Header-->
-        <div class="app-content-header">
-          <!--begin::Container-->
-          <div class="container-fluid">
-            <!--begin::Row-->
-            <div class="row">
-              <div class="col-sm-6">
-                <h1 class="mb-0 fs-3">Starter Page</h1>
-              </div>
-              <div class="col-sm-6">
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1 class="mb-0 fs-3">Product List</h1>
+            </div>
+            <div class="col-sm-6">
                 <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb float-sm-end">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Starter Page</li>
-                  </ol>
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Product List</li>
+                    </ol>
                 </nav>
-              </div>
             </div>
-            <!--end::Row-->
-          </div>
-          <!--end::Container-->
         </div>
-        <!--end::App Content Header-->
-        <!--begin::App Content-->
-        <div class="app-content">
-          <!--begin::Container-->
-          <div class="container-fluid">
-            <!--begin::Row-->
-            <div class="row">
-              <div class="col-12">
-                <!--begin::Card-->
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Starter Card</h3>
+    </div>
+</div>
 
-                    <div class="card-tools">
-                      <button
-                        type="button"
-                        class="btn btn-tool"
-                        data-lte-toggle="card-collapse"
-                        aria-label="Collapse card"
-                      >
-                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-tool"
-                        data-lte-toggle="card-remove"
-                        aria-label="Remove card"
-                      >
-                        <i class="bi bi-x-lg"></i>
-                      </button>
+<div class="app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm">
+
+                    <div class="card-header p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <button type="button" class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#createProductModal">
+                                <i class="bi bi-plus-circle me-1"></i>
+                                PRODUCT
+                            </button>
+
+                            <div class="input-group" style="max-width: 250px;">
+                                <span class="input-group-text bg-white">
+                                    <i class="bi bi-search"></i>
+                                </span>
+
+                                <input id="table-filter"
+                                    type="search"
+                                    class="form-control"
+                                    placeholder="Filter rows...">
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body">
-                <div class="d-flex gap-2 mb-3">
-                  <button id="export-csv" type="button" class="btn btn-sm btn-outline-secondary">
-                    <i class="bi bi-filetype-csv me-1" aria-hidden="true"></i>
-                    Export CSV
-                  </button>
-                  <button id="export-json" type="button" class="btn btn-sm btn-outline-secondary">
-                    <i class="bi bi-filetype-json me-1" aria-hidden="true"></i>
-                    Export JSON
-                  </button>
-                  <button id="print-table" type="button" class="btn btn-sm btn-outline-secondary">
-                    <i class="bi bi-printer me-1" aria-hidden="true"></i>
-                    Print
-                  </button>
+
+                    <div class="card-body">
+                        <div class="d-flex gap-2 mb-3">
+                            <button id="export-csv" type="button" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-filetype-csv me-1"></i>
+                                Export CSV
+                            </button>
+
+                            <button id="export-json" type="button" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-filetype-json me-1"></i>
+                                Export JSON
+                            </button>
+
+                            <button id="print-table" type="button" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-printer me-1"></i>
+                                Print
+                            </button>
+
+                            {{-- <button id="sort-asc" type="button" class="btn btn-sm btn-outline-primary">
+                                ASC ↑
+                            </button>
+
+                            <button id="sort-desc" type="button" class="btn btn-sm btn-outline-primary">
+                                DSC ↓
+                            </button> --}}
+                        </div>
+
+                        <div id="product-table" aria-label="Products"></div>
+
+                        <div id="table-pagination"
+                            class="d-flex flex-wrap gap-2 justify-content-end mt-2">
+                        </div>
+                    </div>
+
+                    <div class="card-footer">The footer of the card</div>
+
                 </div>
-                <div id="users-table" aria-label="Users"></div>
-                <div
-                  id="table-pagination"
-                  class="d-flex flex-wrap gap-2 justify-content-end mt-2"
-                ></div>
-              </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer">The footer of the card</div>
-                  <!-- /.card-footer -->
-                </div>
-                <!--end::Card-->
-              </div>
-              <!-- /.col -->
             </div>
-            <!--end::Row-->
-          </div>
-          <!--end::Container-->
         </div>
-        <!--end::App Content-->
+    </div>
+</div>
 @endsection
 
-<script
-      src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.6.1/dist/js/tabulator.min.js"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      const statusBadge = (cell) => {
-        const value = cell.getValue();
-        const map = { Active: 'success', Invited: 'info', Suspended: 'secondary' };
-        const color = map[value] || 'secondary';
-        return `<span class="badge text-bg-${color}">${value}</span>`;
-      };
+@section('modal')
+    @include('products.modal')
+@endsection
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const data = [
-          {
-            id: 1,
-            name: 'Olivia Bennett',
-            email: 'olivia@example.com',
-            role: 'Admin',
-            status: 'Active',
-            joined: '2024-03-12',
-          },
-          {
-            id: 2,
-            name: 'Liam Carter',
-            email: 'liam@example.com',
-            role: 'Editor',
-            status: 'Active',
-            joined: '2024-04-08',
-          },
-          {
-            id: 3,
-            name: 'Emma Dawson',
-            email: 'emma@example.com',
-            role: 'Viewer',
-            status: 'Invited',
-            joined: '2024-06-21',
-          },
-          {
-            id: 4,
-            name: 'Noah Evans',
-            email: 'noah@example.com',
-            role: 'Editor',
-            status: 'Suspended',
-            joined: '2024-07-15',
-          },
-          {
-            id: 5,
-            name: 'Ava Foster',
-            email: 'ava@example.com',
-            role: 'Admin',
-            status: 'Active',
-            joined: '2024-08-30',
-          },
-          {
-            id: 6,
-            name: 'Ethan Grant',
-            email: 'ethan@example.com',
-            role: 'Viewer',
-            status: 'Active',
-            joined: '2024-09-14',
-          },
-          {
-            id: 7,
-            name: 'Sophia Hayes',
-            email: 'sophia@example.com',
-            role: 'Editor',
-            status: 'Active',
-            joined: '2024-10-02',
-          },
-          {
-            id: 8,
-            name: 'Mason Ingram',
-            email: 'mason@example.com',
-            role: 'Viewer',
-            status: 'Invited',
-            joined: '2024-11-19',
-          },
-          {
-            id: 9,
-            name: 'Isabella Jones',
-            email: 'isabella@example.com',
-            role: 'Admin',
-            status: 'Active',
-            joined: '2025-01-05',
-          },
-          {
-            id: 10,
-            name: 'Lucas Klein',
-            email: 'lucas@example.com',
-            role: 'Viewer',
-            status: 'Suspended',
-            joined: '2025-02-18',
-          },
-          {
-            id: 11,
-            name: 'Mia Lopez',
-            email: 'mia@example.com',
-            role: 'Editor',
-            status: 'Active',
-            joined: '2025-03-22',
-          },
-          {
-            id: 12,
-            name: 'Logan Moore',
-            email: 'logan@example.com',
-            role: 'Viewer',
-            status: 'Active',
-            joined: '2025-04-09',
-          },
-          {
-            id: 13,
-            name: 'Charlotte Nelson',
-            email: 'charlotte@example.com',
-            role: 'Admin',
-            status: 'Active',
-            joined: '2025-04-27',
-          },
-          {
-            id: 14,
-            name: 'Henry Owens',
-            email: 'henry@example.com',
-            role: 'Editor',
-            status: 'Invited',
-            joined: '2025-05-11',
-          },
-          {
-            id: 15,
-            name: 'Amelia Price',
-            email: 'amelia@example.com',
-            role: 'Viewer',
-            status: 'Active',
-            joined: '2025-05-17',
-          },
-        ];
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.6.1/dist/js/tabulator.min.js"
+    crossorigin="anonymous"></script>
 
-        const table = new Tabulator('#users-table', {
-          data: data,
-          layout: 'fitColumns',
-          pagination: true,
-          paginationElement: document.getElementById('table-pagination'),
-          paginationSize: 10,
-          paginationSizeSelector: [10, 25, 50, 100],
-          movableColumns: true,
-          columns: [
-            { title: '#', field: 'id', width: 60, headerSort: true },
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    const table = new Tabulator('#product-table', {
+        index: 'id',
+        ajaxURL: "{{ route('products.api') }}",
+        layout: 'fitColumns',
+        filterMode: 'local',
+        pagination: 'local',
+        paginationElement: document.getElementById('table-pagination'),
+        paginationSize: 10,
+        paginationSizeSelector: [10, 25, 50, 100],
+        movableColumns: true,
+
+        columns: [
             {
-              title: 'Name',
-              field: 'name',
-              headerFilter: 'input',
-              headerFilterParams: { elementAttributes: { 'aria-label': 'Filter by name' } },
+                title: 'ID',
+                field: 'id',
+                width: 80,
+                headerSort: true
             },
             {
-              title: 'Email',
-              field: 'email',
-              headerFilter: 'input',
-              headerFilterParams: { elementAttributes: { 'aria-label': 'Filter by email' } },
+                title: 'Product Name',
+                field: 'name'
             },
             {
-              title: 'Role',
-              field: 'role',
-              headerFilter: 'list',
-              headerFilterParams: {
-                values: ['', 'Admin', 'Editor', 'Viewer'],
-                elementAttributes: { 'aria-label': 'Filter by role' },
-              },
-              width: 120,
+                title: 'Price',
+                field: 'price',
+                formatter: function(cell) {
+                    return 'Rp ' + Number(cell.getValue()).toLocaleString('id-ID');
+                }
             },
             {
-              title: 'Status',
-              field: 'status',
-              formatter: statusBadge,
-              headerFilter: 'list',
-              headerFilterParams: {
-                values: ['', 'Active', 'Invited', 'Suspended'],
-                elementAttributes: { 'aria-label': 'Filter by status' },
-              },
-              width: 130,
-              hozAlign: 'center',
+                title: 'Stock',
+                field: 'stock',
+                width: 120
             },
-            { title: 'Joined', field: 'joined', sorter: 'date', width: 130 },
-          ],
-        });
+            {
+                title: 'Aksi',
+                field: 'id',
+                formatter: function() {
+                    return `
+                        <button type="button" class="btn btn-warning btn-sm btn-edit">
+                            Edit
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm btn-delete">
+                            Hapus
+                        </button>
+                    `;
+                },
+                cellClick: function(e, cell) {
+                    const id = cell.getRow().getData().id;
 
-        table.on('tableBuilt', () => {
-          // Keep the scroll region keyboard reachable inside a valid grid.
-          // Pagination lives outside the grid so its buttons are not grid rows.
-          const grid = document.getElementById('users-table');
-          grid.removeAttribute('aria-owns');
-          grid.querySelector('.tabulator-tableholder').setAttribute('role', 'rowgroup');
-          grid.querySelector('.tabulator-table').setAttribute('role', 'presentation');
-        });
+                    if (e.target.closest('.btn-edit')) {
+                        editProduct(id);
+                    }
 
-        table.on('renderComplete', () => {
-          document.querySelectorAll('#table-pagination button').forEach((button) => {
+                    if (e.target.closest('.btn-delete')) {
+                        deleteProduct(id);
+                    }
+                },
+                headerSort: false,
+                width: 200,
+                hozAlign: 'center'
+            }
+        ]
+    });
+
+    table.on('renderComplete', () => {
+        document.querySelectorAll('#table-pagination button').forEach((button) => {
             button.classList.add('btn', 'btn-sm', 'btn-outline-secondary');
-          });
         });
+    });
 
-        document.getElementById('table-filter').addEventListener('input', (e) => {
-          const value = e.target.value;
-          if (value) {
-            table.setFilter([
-              [
-                { field: 'name', type: 'like', value: value },
-                { field: 'email', type: 'like', value: value },
-              ],
-            ]);
-          } else {
+    // document.getElementById('sort-asc').addEventListener('click', () => {
+    // table.setSort('id', 'asc');
+    // });
+
+    // document.getElementById('sort-desc').addEventListener('click', () => {
+    //     table.setSort('id', 'desc');
+    // });
+
+    document.getElementById('table-filter').addEventListener('input', (e) => {
+        const value = e.target.value;
+
+        if (value) {
+            table.setFilter('name', 'like', value);
+        } else {
             table.clearFilter();
-          }
-        });
+        }
+    });
 
-        document
-          .getElementById('export-csv')
-          .addEventListener('click', () => table.download('csv', 'users.csv'));
-        document
-          .getElementById('export-json')
-          .addEventListener('click', () => table.download('json', 'users.json'));
-        document
-          .getElementById('print-table')
-          .addEventListener('click', () => table.print(false, true));
-      });
-    </script>
+    document.getElementById('export-csv').addEventListener('click', () => {
+        table.download('csv', 'products.csv');
+    });
+
+    document.getElementById('export-json').addEventListener('click', () => {
+        table.download('json', 'products.json');
+    });
+
+    document.getElementById('print-table').addEventListener('click', () => {
+        table.print(false, true);
+    });
+
+    const createForm = document.getElementById('createProductForm');
+
+    createForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        try {
+            const response = await fetch("{{ route('products.store') }}", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: new FormData(createForm)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) throw result;
+
+            await table.addData([result.data], true);
+
+            bootstrap.Modal.getInstance(
+                document.getElementById('createProductModal')
+            ).hide();
+
+            createForm.reset();
+
+            alert('Product berhasil ditambahkan!');
+
+        } catch (error) {
+            showError(error);
+        }
+    });
+
+    window.editProduct = async function(id) {
+        try {
+            const response = await fetch(`/products/${id}/edit`, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            const product = await response.json();
+
+            if (!response.ok) throw product;
+
+            document.getElementById('edit-product-id').value = product.id;
+            document.getElementById('edit-name').value = product.name;
+            document.getElementById('edit-price').value = product.price;
+            document.getElementById('edit-stock').value = product.stock;
+
+            new bootstrap.Modal(
+                document.getElementById('editProductModal')
+            ).show();
+
+        } catch (error) {
+            showError(error);
+        }
+    };
+
+    const editForm = document.getElementById('editProductForm');
+
+    editForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const id = document.getElementById('edit-product-id').value;
+
+        try {
+            const formData = new FormData(editForm);
+            formData.append('_method', 'PUT');
+
+            const response = await fetch(`/products/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) throw result;
+
+            await table.updateData([result.data]);
+
+            bootstrap.Modal.getInstance(
+                document.getElementById('editProductModal')
+            ).hide();
+
+            alert('Product berhasil diperbarui!');
+
+        } catch (error) {
+            showError(error);
+        }
+    });
+
+    window.deleteProduct = async function(id) {
+        if (!confirm('Apakah kamu yakin ingin menghapus product ini?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/products/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) throw result;
+
+            await table.deleteRow(id);
+
+            alert('Product berhasil dihapus!');
+
+        } catch (error) {
+            showError(error);
+        }
+    };
+
+    function showError(error) {
+        if (error.errors) {
+            alert(Object.values(error.errors).flat().join('\n'));
+        } else {
+            alert(error.message || 'Terjadi kesalahan!');
+        }
+    }
+
+});
+</script>
+@endpush

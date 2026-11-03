@@ -14,6 +14,8 @@
       <!--end::Footer-->
     </div>
     <!--end::App Wrapper-->
+    @yield('modal')
+
     <!--begin::Script-->
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script

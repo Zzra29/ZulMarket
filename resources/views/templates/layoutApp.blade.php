@@ -2,6 +2,7 @@
 <html lang="en">
   <!--begin::Head-->
   <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>ZulMarket | PPLG-RPL 3</title>
 
@@ -117,3 +118,14 @@
       </main>
       <!--end::App Main-->
       @include('templates.footer')
+          </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.16.0/browser/overlayscrollbars.browser.es6.min.js"></script>
+    <script src="{{ asset('assets/js/adminlte.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+    @yield('modal')
+    @stack('scripts')
+  </body>
+</html>
